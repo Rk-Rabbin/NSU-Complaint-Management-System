@@ -1,0 +1,56 @@
+{% extends 'newapp/base.html' %}
+{% load static %}
+{% block title %}Complaints{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+ <div class="row">
+ <h3>Welcome <span class="text-capitalize">{{request.user.name}}</span></h3>
+  <div class="col-sm-2 border-end">
+   <ul class="list-unstyled">
+    <li class="d-grid"><a href="{% url 'userprofile' %}" class="btn">Profile</a></li>
+    <li class="d-grid"><a href="{% url 'info' %}" class="btn">Personal Info</a></li>
+    <li class="d-grid"><a href="{% url 'complaints' %}" class="btn">Complaints</a></li>
+    {% if request.user.position == "Faculty" %}
+    <li class="d-grid"><a href="{% url 'review' %}" class="btn {{active}}">Review</a></li>
+    {% endif %}
+   </ul>
+  </div>
+  <div class="col-sm-9 offset-sm-1">
+   <div class="row">
+    <div class="card">
+      {% if comp|length > 0 %}
+        {% for com in comp %}
+          {% if com.status != "Reviewed"  %}
+          <div class="card-header">
+            Complaint {{forloop.counter}}
+          </div>
+            <div class="card-body">
+              <h5 class="card-title">Complainer</h5>
+              <p class="card-text">{{com.complainer}}</p>
+              <h5 class="card-title">Accused</h5>
+              <p class="card-text">{{com.accused}}</p>
+              <h5 class="card-title">Statement</h5>
+              <p class="card-text">{{com.statement}}</p>
+              <h5 class="card-title">Status</h5>
+              <p class="card-text">{{com.status}}</p>
+              <a href="{%url 'det-review' com.id %}" class="btn btn-primary">Review</a>
+            </div>
+          {% else %}
+          <div class="card-header">
+            No Complaints To Review
+          </div>
+          {% endif %}
+        {% endfor %}
+        {% else %}
+        <div class="card-header">
+          No Complaints To Review
+        </div>
+        {% endif %}    
+        </div>
+      </div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+{% endblock main-content %}

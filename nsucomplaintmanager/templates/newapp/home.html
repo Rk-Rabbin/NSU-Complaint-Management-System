@@ -1,0 +1,22 @@
+{% extends 'newapp/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+{% block main-content %}
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-info">
+    <div class="col-md-5 p-lg-5 mx-auto my-5">
+      <div class="text-center">
+        <img src="{% static 'newapp/nsu_logo.png' %}" class="rounded" width="200" height="200">
+      </div>
+      <h1 class="display-4 font-weight-normal">North South University</h1>
+      <p class="lead font-weight-normal">NSU Complain Lodger</p> 
+      <p class="lead font-weight-normal">Register - </p>
+      <a class="btn btn-outline-dark" href="{% url 'registration' %}">Register</a><br>        
+      <Login class="lead font-weight-normal">Or, Login - </p>
+      <a class="btn btn-outline-dark" href="{% url 'login' %}">Login</a>
+      <a class="btn btn-outline-dark" href="http://127.0.0.1:8000/admin/">Admin</a>
+    </div>
+    <div class="product-device box-shadow d-none d-md-block"></div>
+    <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+  </div>
+{% endblock main-content %}

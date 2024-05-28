@@ -1,0 +1,60 @@
+{% extends 'newapp/base.html' %}
+{% load static %}
+{% block title %}Personal Information{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+ <div class="row">
+ <h3>Welcome <span class="text-capitalize">{{request.user.name}}</span></h3>
+  <div class="col-sm-2 border-end">
+   <ul class="list-unstyled">
+    <li class="d-grid"><a href="{% url 'userprofile' %}" class="btn">Profile</a></li>
+    <li class="d-grid"><a href="{% url 'info' %}" class="btn {{active}}">Personal Info</a></li>
+    <li class="d-grid"><a href="{% url 'complaints' %}" class="btn">Complaints</a></li>
+    {% if request.user.position == "Faculty" %}
+    <li class="d-grid"><a href="{% url 'review' %}" class="btn">Review</a></li>
+    {% endif %}
+   </ul>
+  </div>
+  <div class="col-sm-9 offset-sm-1">
+   <div class="row">
+    <div class="col-sm-6">
+     <div class="card">
+      <div class="card-body">
+       <h3>Personal Information</h3>
+       {% if info.is_staff %}
+       Go to <a href="{% url 'userprofile' %}">Profile</a> to update information
+       {% elif info.name|length > 0 %}
+       <p>Name: {{info.name}}</p>
+       <p>Position: {{info.position}}</p>
+       <p>Email: {{info.email}}</p>
+       {% if info.position == "Student" %}
+       {% if stud != None %}
+       <p>Student Id: {{stud.student_id}}</p>
+       {% else %}
+       Go to <a href="{% url 'userprofile' %}">Profile</a> to update information
+       {% endif %}
+       {% elif info.position == "Faculty" %}
+       {% if fac != None %}
+       <p>Faculty Initial: {{fac.faculty_initial}}</p>
+       {% else %}
+       Go to <a href="{% url 'userprofile' %}">Profile</a> to update information
+       {% endif %}
+       {% elif info.position == "Employee" %}
+       {% if emp != None %}
+       <p>Employee Id: {{emp.employee_id}}</p>
+       <p>Sector: {{emp.sector}}</p>
+       {% else %}
+       Go to <a href="{% url 'userprofile' %}">Profile</a> to update information
+       {% endif %}
+       {% endif %}
+       {% else %}
+       Go to <a href="{% url 'userprofile' %}">Profile</a> to update information
+       {% endif %}
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+{% endblock main-content %}

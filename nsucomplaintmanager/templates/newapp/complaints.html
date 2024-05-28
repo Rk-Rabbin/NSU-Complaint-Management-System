@@ -1,0 +1,46 @@
+{% extends 'newapp/base.html' %}
+{% load static %}
+{% block title %}Complaints{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+ <div class="row">
+ <h3>Welcome <span class="text-capitalize">{{request.user.name}}</span></h3>
+  <div class="col-sm-2 border-end">
+   <ul class="list-unstyled">
+    <li class="d-grid"><a href="{% url 'userprofile' %}" class="btn">Profile</a></li>
+    <li class="d-grid"><a href="{% url 'info' %}" class="btn">Personal Info</a></li>
+    <li class="d-grid"><a href="{% url 'complaints' %}" class="btn {{active}}">Complaints</a></li>
+    {% if request.user.position == "Faculty" %}
+    <li class="d-grid"><a href="{% url 'review' %}" class="btn">Review</a></li>
+    {% endif %}
+   </ul>
+  </div>
+  <div class="col-sm-9 offset-sm-1">
+   <div class="row">
+    {% if add|length > 0 %}
+    {% for ad in add %}
+    <div class="col-sm-6">
+     <div class="card">
+      <div class="card-body">
+       <h3>Complaint {{forloop.counter}}</h3>
+       <p>Complainer: {{ad.complainer}}</p>
+       <p>Accused: {{ad.accused}}</p>
+       <p>Accused Status: {{ad.accused_status}}</p>
+       <p>Reviewer: {{ad.reviewer}}</p>
+       <p>Status: {{ad.status}}</p>
+       <p>Comment: {{ad.comment}}</p>
+       <p>Statement: {{ad.statement}}</p>
+       <p>Proofs: <img src= "{{ad.upload.url}}"></p>
+       <p>Publish Date: {{ad.publish_date}}</p>
+      </div>
+      {% endfor %}
+      {% else %}
+        <h3>No Complaints To Show</h3> 
+      {% endif %}
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+{% endblock main-content %}
